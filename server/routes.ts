@@ -195,15 +195,15 @@ function getCookieArgs(): string[] {
     return ["--cookies", cookieFile];
   }
 
-  if (process.env.NODE_ENV !== "production") {
-    return ["--cookies-from-browser", process.env.COOKIES_BROWSER || "chrome"];
+  if (process.env.COOKIES_BROWSER) {
+    return ["--cookies-from-browser", process.env.COOKIES_BROWSER];
   }
 
   return [];
 }
 
 // Realistic browser User-Agent to avoid bot detection
-const YTDLP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36";
+const YTDLP_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36";
 
 // Proxy support via environment variable (supports comma-separated list)
 function getProxyArgs(): string[] {
@@ -218,14 +218,19 @@ function getProxyArgs(): string[] {
 }
 
 // Common yt-dlp args shared by ALL invocations (extraction + download)
-function getCommonYtDlpArgs(playerClient: string = "web,default"): string[] {
+function getCommonYtDlpArgs(playerClient?: string): string[] {
   return [
-    // Required for YouTube "n challenge" solving (EJS). Deno is yt-dlp's recommended runtime.
+    // Required for YouTube "n challenge" solving (EJS). Deno on Render, Node fallback locally.
     "--js-runtimes", "deno",
+    "--js-runtimes", "node",
     // Allow yt-dlp to fetch the EJS challenge solver scripts at runtime.
     // (Required when the script distribution is not bundled with the installed yt-dlp package.)
     "--remote-components", "ejs:github",
-    "--extractor-args", `youtube:player_client=${playerClient}`,
+    // Do NOT force a player client by default. On recent yt-dlp versions the automatic
+    // client fallback (web_safari, web embedded, tv samsung, ...) is required to work
+    // around YouTube enforcing SABR streaming / "The page needs to be reloaded" errors.
+    // Only pass --extractor-args when a caller explicitly needs a specific client.
+    ...(playerClient ? ["--extractor-args", `youtube:player_client=${playerClient}`] : []),
     "--user-agent", YTDLP_USER_AGENT,
     "--impersonate", "chrome",
     ...getProxyArgs(),
@@ -1292,7 +1297,7 @@ export async function registerRoutes(
           "--retries", "3",
           "--sleep-interval", "1",
           ...(supportsRichMeta ? ["--embed-thumbnail", "--add-metadata"] : []),
-          ...getCommonYtDlpArgs("web_music,default"),
+          ...getCommonYtDlpArgs(),
           ...cookieArgs,
           ...(duration && duration > 0 ? ["--match-filter", `duration > ${Math.max(0, duration - 10)} & duration < ${duration + 10}`] : []),
           "-o", outTemplate,
@@ -1310,7 +1315,7 @@ export async function registerRoutes(
           "--socket-timeout", "30",
           "--retries", "3",
           "--sleep-interval", "1",
-          ...getCommonYtDlpArgs("web_music,default"),
+          ...getCommonYtDlpArgs(),
           ...cookieArgs,
           ...(duration && duration > 0 ? ["--match-filter", `duration > ${Math.max(0, duration - 10)} & duration < ${duration + 10}`] : []),
           "-o", outTemplate,
@@ -1355,7 +1360,7 @@ export async function registerRoutes(
               ...(audioFormat ? ["--audio-format", audioFormat, "--audio-quality", aQual] : []),
               "--no-playlist",
               "--sleep-interval", "3",
-              ...getCommonYtDlpArgs("web_music,default"),
+              ...getCommonYtDlpArgs(),
               ...cookieArgs,
               ...(duration && duration > 0 ? ["--match-filter", `duration > ${Math.max(0, duration - 10)} & duration < ${duration + 10}`] : []),
               "-o", outTemplate, "--", searchQuery
@@ -1366,7 +1371,7 @@ export async function registerRoutes(
               "-f", `bestvideo[height<=${rh}]+bestaudio/best[height<=${rh}]`,
               "--merge-output-format", "mp4",
               "--sleep-interval", "3",
-              ...getCommonYtDlpArgs("web_music,default"),
+              ...getCommonYtDlpArgs(),
               ...cookieArgs,
               ...(duration && duration > 0 ? ["--match-filter", `duration > ${Math.max(0, duration - 10)} & duration < ${duration + 10}`] : []),
               "-o", outTemplate, "--", searchQuery
