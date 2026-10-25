@@ -23,7 +23,7 @@ export interface LoaderProps {
   autoHide?: boolean;
   /**
    * Minimum time in milliseconds to display the loader before auto-hiding.
-   * Defaults to 1800ms.
+   * Defaults to 3000ms.
    */
   minDisplayTime?: number;
   /**
@@ -37,7 +37,7 @@ export function Loader({
   className,
   duration = 2.0,
   autoHide = false,
-  minDisplayTime = 1800,
+  minDisplayTime = 3000,
   onFinish,
 }: LoaderProps) {
   const [visible, setVisible] = useState(true);

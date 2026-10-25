@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import { FlipText } from "@/components/block/flip-text";
+import { useLenis } from "lenis/react";
 
 const navLinks = [
   { label: "Terms of Service", href: "/terms", isRoute: true },
@@ -19,8 +20,14 @@ const legalLinks = [
 ];
 
 export function Footer() {
+  const lenis = useLenis();
+
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.2 });
+    } else {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    }
   };
 
   return (
