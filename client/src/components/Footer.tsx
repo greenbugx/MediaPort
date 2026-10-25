@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
+import { FlipText } from "@/components/block/flip-text";
 
 const navLinks = [
   { label: "Terms of Service", href: "/terms", isRoute: true },
@@ -34,21 +35,26 @@ export function Footer() {
         className="absolute inset-0 bg-gradient-to-b from-transparent to-[hsl(218_45%_82%)/60] dark:to-[hsl(222_30%_7%)/80]"
       />
 
-      {/* Giant faded watermark sliding off the bottom edge */}
+      {/* Giant interactive watermark sliding off the bottom edge */}
       <div
-        aria-hidden
-        className="pointer-events-none select-none absolute inset-x-0 -bottom-6 md:-bottom-12 text-center font-bold tracking-tight leading-none text-[22vw] md:text-[18vw] text-foreground/[0.07] dark:text-foreground/[0.05]"
+        className="pointer-events-none select-none absolute inset-x-0 -bottom-6 md:-bottom-12 flex justify-center items-end text-center font-bold tracking-tight leading-none text-[22vw] md:text-[18vw] text-foreground/[0.07] dark:text-foreground/[0.05] z-10"
       >
-        mediaport
+        <FlipText
+          yOffset="-0.04em"
+          duration={0.45}
+          className="tracking-tight pointer-events-auto hover:text-foreground/[0.14] transition-colors"
+        >
+          mediaport
+        </FlipText>
       </div>
 
-      <div className="relative max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-20 md:pb-28">
+      <div className="relative z-20 max-w-6xl mx-auto px-6 pt-16 md:pt-20 pb-20 md:pb-28 pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col md:flex-row md:items-start md:justify-between gap-12"
+          className="flex flex-col md:flex-row md:items-start md:justify-between gap-12 pointer-events-auto"
         >
           {/* Left: GitHub circle icon, email, and address */}
           <div className="space-y-6">
@@ -112,7 +118,7 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.15 }}
-          className="mt-16 md:mt-20 pt-8 border-t border-border/20 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-foreground/60"
+          className="mt-16 md:mt-20 pt-8 border-t border-border/20 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-foreground/60 pointer-events-auto"
         >
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 order-2 md:order-1">
             {legalLinks.map((item) => (

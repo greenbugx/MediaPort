@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Download, ArrowLeft } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { FlipText } from "@/components/block/flip-text";
 
 export type LegalSection = {
   heading: string;
@@ -37,7 +38,7 @@ export function LegalLayout({
             <div className="w-10 h-10 bg-primary flex items-center justify-center">
               <Download className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span>MediaPort</span>
+            <FlipText>MediaPort</FlipText>
           </Link>
           <ThemeToggle />
         </div>

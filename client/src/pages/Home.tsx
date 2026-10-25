@@ -14,6 +14,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Features } from "@/components/Features";
 import { Loader2, Download, Search, Settings } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FlipText } from "@/components/block/flip-text";
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -68,7 +69,7 @@ export default function Home() {
             <div className="w-10 h-10 bg-primary flex items-center justify-center">
               <Download className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span>MediaPort</span>
+            <FlipText>MediaPort</FlipText>
           </div>
           <ThemeToggle />
         </div>
