@@ -1,58 +1,127 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useMemo } from "react";
 import { cn } from "@/lib/utils";
 
 interface FlipTextProps {
-  children: string;
+  /**
+   * Additional CSS classes for the wrapper
+   */
   className?: string;
+
+  /**
+   * The text content to animate (will be split by spaces)
+   */
+  children: string;
+
+  /**
+   * Duration of the flip animation in seconds
+   * @default 2.2
+   */
   duration?: number;
-  stagger?: number;
-  repeatDelay?: number;
-  initialDelay?: number;
+
+  /**
+   * Initial delay before animation starts in seconds
+   * @default 0
+   */
+  delay?: number;
+
+  /**
+   * Whether the animation should loop infinitely
+   * @default true
+   */
+  loop?: boolean;
+
+  /**
+   * Custom separator for splitting text (default is space)
+   * @default " "
+   */
+  separator?: string;
+
+  /**
+   * Whether all characters should animate together (no stagger)
+   * @default false
+   */
+  together?: boolean;
 }
 
 export function FlipText({
-  children,
   className,
-  duration = 0.75,
-  stagger = 0.08,
-  repeatDelay = 2.5,
-  initialDelay = 0.3,
+  children,
+  duration = 2.2,
+  delay = 0,
+  loop = true,
+  separator = " ",
+  together = false,
 }: FlipTextProps) {
-  const chars = children.split("");
+  const words = useMemo(() => children.split(separator), [children, separator]);
+  const totalChars = children.length;
+
+  // Calculate character index for each position
+  const getCharIndex = (wordIndex: number, charIndex: number) => {
+    let index = 0;
+    for (let i = 0; i < wordIndex; i++) {
+      index += words[i].length + (separator === " " ? 1 : separator.length);
+    }
+    return index + charIndex;
+  };
 
   return (
-    <span
-      className={cn("inline-flex leading-none select-none [perspective:1000px]", className)}
-      style={{ perspective: 1000 }}
+    <div
+      className={cn(
+        "flip-text-wrapper inline-block leading-none",
+        className
+      )}
+      style={{ perspective: "1000px" }}
     >
-      {chars.map((char, index) => (
-        <motion.span
-          key={index}
-          className="inline-block relative"
-          style={{
-            transformStyle: "preserve-3d",
-            backfaceVisibility: "visible",
-          }}
-          animate={{
-            rotateX: [0, 360],
-            opacity: [1, 0.45, 1],
-            y: [0, -6, 0],
-          }}
-          transition={{
-            duration,
-            ease: [0.45, 0.05, 0.55, 0.95],
-            delay: initialDelay + index * stagger,
-            repeat: Infinity,
-            repeatDelay,
-          }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
-      ))}
-    </span>
+      {words.map((word, wordIndex) => {
+        const chars = word.split("");
+
+        return (
+          <span
+            key={wordIndex}
+            className="word inline-block whitespace-nowrap"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {chars.map((char, charIndex) => {
+              const currentGlobalIndex = getCharIndex(wordIndex, charIndex);
+
+              // Calculate delay: if together, use same delay for all
+              let calculatedDelay = delay;
+              if (!together) {
+                const normalizedIndex = currentGlobalIndex / totalChars;
+                const sineValue = Math.sin(normalizedIndex * (Math.PI / 2));
+                calculatedDelay = sineValue * (duration * 0.25) + delay;
+              }
+
+              return (
+                <span
+                  key={charIndex}
+                  className="flip-char inline-block relative"
+                  data-char={char}
+                  style={
+                    {
+                      "--flip-duration": `${duration}s`,
+                      "--flip-delay": `${calculatedDelay}s`,
+                      "--flip-iteration": loop ? "infinite" : "1",
+                      transformStyle: "preserve-3d",
+                    } as React.CSSProperties
+                  }
+                >
+                  {char}
+                </span>
+              );
+            })}
+            {separator === " " && wordIndex < words.length - 1 && (
+              <span className="whitespace inline-block">&nbsp;</span>
+            )}
+            {separator !== " " && wordIndex < words.length - 1 && (
+              <span className="separator inline-block">{separator}</span>
+            )}
+          </span>
+        );
+      })}
+    </div>
   );
 }
 

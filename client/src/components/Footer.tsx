@@ -40,9 +40,7 @@ export function Footer() {
         className="pointer-events-none select-none absolute inset-x-0 -bottom-6 md:-bottom-12 flex justify-center items-end text-center font-bold tracking-tight leading-none text-[22vw] md:text-[18vw] text-foreground/[0.07] dark:text-foreground/[0.05] z-10"
       >
         <FlipText
-          duration={0.85}
-          stagger={0.09}
-          repeatDelay={3}
+          duration={2.6}
           className="tracking-tight hover:text-foreground/[0.14] transition-colors"
         >
           mediaport
