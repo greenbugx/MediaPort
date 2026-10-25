@@ -218,7 +218,7 @@ export function PlaylistTracks({ tracks, playlistTitle, extractor, playlistConfi
                             transition={{ delay: Math.min(i * 0.05, 1) }}
                             className="flex items-center gap-3 group py-3 px-4 hover:bg-muted/50 transition-colors border border-transparent hover:border-border rounded-lg overflow-hidden"
                         >
-                            {/* Thumbnail — fixed width */}
+                            {/* Thumbnail: fixed width */}
                             <div className="flex-shrink-0">
                                 {track.thumbnail ? (
                                     <img src={track.thumbnail} alt={track.title} className={`rounded shadow-sm object-cover ${isYouTube ? 'w-16 h-10' : 'w-10 h-10'}`} />
@@ -233,7 +233,7 @@ export function PlaylistTracks({ tracks, playlistTitle, extractor, playlistConfi
                                 )}
                             </div>
 
-                            {/* Title + artist — takes remaining space, truncates */}
+                            {/* Title + artist: takes remaining space, truncates */}
                             <div className="flex-1 min-w-0">
                                 <p className="text-sm font-semibold truncate text-foreground">
                                     {track.title}
@@ -250,7 +250,7 @@ export function PlaylistTracks({ tracks, playlistTitle, extractor, playlistConfi
                                 </div>
                             </div>
 
-                            {/* Download button — always visible */}
+                            {/* Download button: always visible */}
                             <button
                                 onClick={() => handleDownloadTrack(track)}
                                 disabled={isProcessing || isDone}

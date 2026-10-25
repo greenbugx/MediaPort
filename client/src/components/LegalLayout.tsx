@@ -43,15 +43,15 @@ export function LegalLayout({
         </div>
       </nav>
 
-      {/* Hero — quiet, with a drifting theme-aware glow */}
-      <header className="relative overflow-hidden border-b border-border/40">
+      {/* Hero: quiet, with a drifting theme-aware glow */}
+      <header className="relative overflow-hidden">
         <motion.div
           aria-hidden
           className="absolute -top-32 left-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-primary/[0.06] dark:bg-primary/[0.05] blur-3xl"
           animate={{ scale: [1, 1.12, 1], opacity: [0.7, 1, 0.7] }}
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="relative max-w-3xl mx-auto px-6 pt-20 pb-14 md:pt-24 md:pb-16">
+        <div className="relative max-w-3xl mx-auto px-6 pt-16 pb-4 md:pt-20 md:pb-6">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -60,15 +60,12 @@ export function LegalLayout({
             <p className="font-mono text-xs uppercase tracking-[0.3em] text-muted-foreground">{kicker}</p>
             <h1 className="mt-4 text-4xl md:text-5xl font-bold tracking-tighter leading-tight">{title}</h1>
             {subtitle && <p className="mt-4 text-lg text-muted-foreground leading-relaxed">{subtitle}</p>}
-            <span className="mt-7 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs text-muted-foreground">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary/60" />
-              Last updated {updated}
-            </span>
+            <p className="mt-4 text-sm text-muted-foreground">Last updated {updated}</p>
           </motion.div>
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-6 py-16 md:py-24">
+      <main className="max-w-3xl mx-auto px-6 pt-6 pb-16 md:pb-24">
         {sections.map((section, i) => (
           <motion.section
             key={section.heading}
