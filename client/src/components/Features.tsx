@@ -87,7 +87,7 @@ const FeatureCard = ({
 
 export const Features = () => {
     return (
-        <section className="py-24">
+        <section id="features" className="py-24">
             <div className="flex items-center gap-4 mb-16">
                 <h2 className="text-3xl font-bold tracking-tighter">Why MediaPort?</h2>
                 <div className="h-[1px] flex-1 bg-border/50"></div>

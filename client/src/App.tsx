@@ -4,11 +4,19 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
+import PrivacyPolicy from "@/pages/PrivacyPolicy";
+import TermsOfService from "@/pages/TermsOfService";
+import DpdPAct from "@/pages/DpdPAct";
+import EuropeanUnionAct from "@/pages/EuropeanUnionAct";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/privacy" component={PrivacyPolicy} />
+      <Route path="/terms" component={TermsOfService} />
+      <Route path="/dpdp" component={DpdPAct} />
+      <Route path="/eu" component={EuropeanUnionAct} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -16,6 +24,7 @@ function Router() {
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/CustomCursor";
+import { Footer } from "@/components/Footer";
 
 function App() {
   return (
@@ -23,7 +32,10 @@ function App() {
       <CustomCursor />
       <QueryClientProvider client={queryClient}>
         <Toaster />
-        <Router />
+        <div className="min-h-screen flex flex-col">
+          <Router />
+          <Footer />
+        </div>
       </QueryClientProvider>
     </ThemeProvider>
   );

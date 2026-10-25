@@ -57,7 +57,7 @@ export default function Home() {
   }, [result, isYouTubePlaylist, url]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+    <div className="flex-1 bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <motion.nav
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
