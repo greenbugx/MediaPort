@@ -40,9 +40,10 @@ export function Footer() {
         className="pointer-events-none select-none absolute inset-x-0 -bottom-6 md:-bottom-12 flex justify-center items-end text-center font-bold tracking-tight leading-none text-[22vw] md:text-[18vw] text-foreground/[0.07] dark:text-foreground/[0.05] z-10"
       >
         <FlipText
-          yOffset="-0.04em"
-          duration={0.45}
-          className="tracking-tight pointer-events-auto hover:text-foreground/[0.14] transition-colors"
+          duration={0.85}
+          stagger={0.09}
+          repeatDelay={3}
+          className="tracking-tight hover:text-foreground/[0.14] transition-colors"
         >
           mediaport
         </FlipText>
