@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route, useLocation } from "wouter";
+import { AnimatePresence } from "framer-motion";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -12,6 +13,7 @@ import EuropeanUnionAct from "@/pages/EuropeanUnionAct";
 import { ThemeProvider } from "@/components/theme-provider";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Footer } from "@/components/Footer";
+import { Loader } from "@/components/Loader";
 
 function ScrollToTop() {
   const [location] = useLocation();
@@ -37,11 +39,22 @@ function Router() {
 }
 
 function App() {
+  const [initialLoading, setInitialLoading] = useState(true);
+
   return (
     <ThemeProvider defaultTheme="light" attribute="class">
       <CustomCursor />
       <QueryClientProvider client={queryClient}>
         <Toaster />
+        <AnimatePresence>
+          {initialLoading && (
+            <Loader
+              autoHide={true}
+              minDisplayTime={1600}
+              onFinish={() => setInitialLoading(false)}
+            />
+          )}
+        </AnimatePresence>
         <div className="min-h-screen flex flex-col">
           <ScrollToTop />
           <Router />
