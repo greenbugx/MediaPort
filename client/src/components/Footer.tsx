@@ -3,11 +3,18 @@ import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 
 const navLinks = [
-  { label: "TOC", href: "/terms", isRoute: true },
+  { label: "Terms of Service", href: "/terms", isRoute: true },
   { label: "Privacy Policy", href: "/privacy", isRoute: true },
-  { label: "Disclaimer", href: "#disclaimer", isRoute: false },
-  { label: "About", href: "/", isRoute: true },
-  { label: "Contact", href: "mailto:hello@mediaport.com", isRoute: false },
+  { label: "DPDP Act", href: "/dpdp", isRoute: true },
+  { label: "GDPR (EU)", href: "/eu", isRoute: true },
+  { label: "Features", href: "/#features", isRoute: false },
+];
+
+const legalLinks = [
+  { label: "Terms of Service", href: "/terms" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "DPDP Act", href: "/dpdp" },
+  { label: "GDPR (EU)", href: "/eu" },
 ];
 
 export function Footer() {
@@ -85,9 +92,8 @@ export function Footer() {
                 <a
                   key={item.label}
                   href={item.href}
-                  onClick={(e) => {
-                    if (item.href.startsWith("#")) {
-                      e.preventDefault();
+                  onClick={() => {
+                    if (item.href === "/#features") {
                       scrollToTop();
                     }
                   }}
@@ -100,7 +106,7 @@ export function Footer() {
           </nav>
         </motion.div>
 
-        {/* Bottom bar: Legal links and copyright */}
+        {/* Bottom bar: Original upstream legal links and copyright */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -108,39 +114,22 @@ export function Footer() {
           transition={{ duration: 0.7, delay: 0.15 }}
           className="mt-16 md:mt-20 pt-8 border-t border-border/20 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-foreground/60"
         >
-          <div className="order-2 md:order-1">
-            <Link
-              href="/terms"
-              onClick={scrollToTop}
-              className="underline underline-offset-4 text-foreground/75 hover:text-foreground transition-colors"
-            >
-              Terms and conditions
-            </Link>
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-x-6 gap-y-2 order-2 md:order-1">
+            {legalLinks.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                onClick={scrollToTop}
+                className="underline underline-offset-4 text-foreground/75 hover:text-foreground transition-colors"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
 
           <p className="order-1 md:order-2 font-normal text-center">
             © 2026 MediaPort. All Rights Reserved
           </p>
-
-          <div className="flex items-center gap-6 order-3">
-            <Link
-              href="/privacy"
-              onClick={scrollToTop}
-              className="underline underline-offset-4 text-foreground/75 hover:text-foreground transition-colors"
-            >
-              Privacy Policy
-            </Link>
-            <a
-              href="#disclaimer"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToTop();
-              }}
-              className="underline underline-offset-4 text-foreground/75 hover:text-foreground transition-colors"
-            >
-              Disclaimer
-            </a>
-          </div>
         </motion.div>
       </div>
     </footer>
