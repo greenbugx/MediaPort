@@ -122,5 +122,10 @@
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
+  },
+  "allowScripts": {
+    "bufferutil@4.1.0": true,
+    "puppeteer@24.37.5": true,
+    "esbuild@0.27.2": true
   }
 }

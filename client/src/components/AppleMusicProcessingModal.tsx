@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * ⚠️  LEGAL NOTICE — APPLE MUSIC PROCESSING MODAL  ⚠️
+ * ⚠️  LEGAL NOTICE: APPLE MUSIC PROCESSING MODAL  ⚠️
  * ============================================================================
  * This UI component facilitates the display of real-time progress during the
  * recording of DRM-protected Apple Music audio streams. By using this
@@ -50,7 +50,7 @@ interface RecordingState {
 
 /**
  * ⚠️  USER INTERFACE DISCLAIMER: This modal presents the recording of
- * copyrighted audio as a "processing" step. Make no mistake — what is
+ * copyrighted audio as a "processing" step. Make no mistake: what is
  * happening in the background is the capture of DRM-protected content.
  * The progress bar represents the real-time recording of copyrighted music.
  */

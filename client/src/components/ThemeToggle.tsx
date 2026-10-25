@@ -61,7 +61,7 @@ export function ThemeToggle() {
     };
 
     if (!mounted) {
-        // Avoid hydration mismatch — render a placeholder
+        // Avoid hydration mismatch: render a placeholder
         return (
             <Button
                 variant="ghost"

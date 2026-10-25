@@ -54,7 +54,7 @@ const sections: LegalSection[] = [
         <a href="mailto:dpdp@mediaport.com" className="font-medium text-foreground hover:text-primary transition-colors">
           dpdp@mediaport.com
         </a>
-        <p className="mt-1 text-xs text-muted-foreground">Grievance Officer — Data Protection</p>
+        <p className="mt-1 text-xs text-muted-foreground">Grievance Officer: Data Protection</p>
       </div>
     ),
   },
